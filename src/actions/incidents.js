@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'https://w2nwvvqkp5.execute-api.us-east-1.amazonaws.com/dev/incidents';
+const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/incidents`;
 
 const fetchIncidentsSuccess = (incidents) => {
   return {
