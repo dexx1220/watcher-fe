@@ -1,20 +1,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getIncidents } from '../../actions/incidents';
+import moment from 'moment';
 
 class Incidents extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      lastRefresh: new Date(),
+      currentTime: new Date()
+    }
   }
 
   componentDidMount() {
     this.props.getIncidents();
+    this.timer = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  tick() {
+    this.setState({
+      currentTime: new Date()
+    })
   }
 
   render() {
+    const timeDiff = (moment(this.state.currentTime)).diff(moment(this.state.lastRefresh), 'minutes');
+    const timeUnits = timeDiff > 60 ? 'hour(s)' : 'minute(s)';
     return (
       <div>
         <h1>Integration Incidents</h1>
+        {timeDiff > 0 ?
+          <h5>Page last refreshed: {timeDiff} {timeUnits} ago</h5> : null
+        }
         <table>
           <thead>
             <tr>
@@ -29,9 +50,9 @@ class Incidents extends Component {
           <tbody>
             {this.props.incidents.map(i => {
               return(
-                <tr>
+                <tr key={i._id}>
                   <td>{i._id}</td>
-                  <td>{i.date}</td>
+                  <td>{moment(i.date).format("MMM-DD-YYYY hh:mm A").toString()}</td>
                   <td>{i.message}</td>
                   <td>{i.service}</td>
                   <td>{i.resolved.toString()}</td>

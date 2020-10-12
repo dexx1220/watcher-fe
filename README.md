@@ -2,4 +2,3 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### TODO ###
 1. Implement incident update
-2. Add some styling
