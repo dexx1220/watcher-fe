@@ -5,7 +5,7 @@ export const INITIAL_STATE = {
 }
 
 const reducers = {
-  'INCIDENTS.SUCCESS': getIncidents
+  'INCIDENTS.SUCCESS': getIncidents,
 }
 
 function getIncidents(state, payload) {

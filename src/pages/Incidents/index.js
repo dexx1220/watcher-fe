@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getIncidents } from '../../actions/incidents';
+import { getIncidents, updateIncident } from '../../actions/incidents';
 import moment from 'moment';
 
 class Incidents extends Component {
@@ -44,6 +44,7 @@ class Incidents extends Component {
               <th>Message</th>
               <th>Service</th>
               <th>Resolved</th>
+              <th />
             </tr>
           </thead>
 
@@ -56,6 +57,7 @@ class Incidents extends Component {
                   <td>{i.message}</td>
                   <td>{i.service}</td>
                   <td>{i.resolved.toString()}</td>
+                  <td><button onClick={() => this.props.updateIncident(i._id, !i.resolved)}>Resolve</button></td>
                 </tr>
               );
             })}
@@ -72,4 +74,7 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { getIncidents })(Incidents);
+export default connect(mapStateToProps, { 
+  getIncidents,
+  updateIncident
+})(Incidents);

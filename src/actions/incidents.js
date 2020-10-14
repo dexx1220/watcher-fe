@@ -16,6 +16,20 @@ const fetchIncidentsFailure = (error) => {
   }
 }
 
+const updateIncidentSuccess = (incident) => {
+  return {
+    type: 'INCIDENT.UPDATE.SUCCESS',
+    payload: incident
+  }
+}
+
+const updateIncidentFailure = (error) => {
+  return {
+    type: 'INCIDENT.UPDATE.FAILURE',
+    error
+  }
+}
+
 export const getIncidents = () => dispatch => {
   return axios.get(baseUrl)
     .then(res => {
@@ -23,5 +37,15 @@ export const getIncidents = () => dispatch => {
     })
     .catch(err => {
       dispatch(fetchIncidentsFailure(err))
+    })
+}
+
+export const updateIncident = (id, status) => dispatch => {
+  return axios.patch(`${baseUrl}/${id}`, { resolved: status })
+    .then(res => {
+      dispatch(getIncidents());
+    })
+    .catch(err => {
+      dispatch(updateIncidentFailure(err))
     })
 }
