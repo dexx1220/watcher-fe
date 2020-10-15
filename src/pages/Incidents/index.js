@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getIncidents, updateIncident } from '../../actions/incidents';
 import moment from 'moment';
+import './index.css';
 
 class Incidents extends Component {
   constructor(props) {
@@ -31,8 +32,8 @@ class Incidents extends Component {
     const timeDiff = (moment(this.state.currentTime)).diff(moment(this.state.lastRefresh), 'minutes');
     const timeUnits = timeDiff > 60 ? 'hour(s)' : 'minute(s)';
     return (
-      <div>
-        <h1>Integration Incidents</h1>
+      <div class="container">
+        <h1>Cyclr Errors</h1>
         {timeDiff > 0 ?
           <h5>Page last refreshed: {timeDiff} {timeUnits} ago</h5> : null
         }
